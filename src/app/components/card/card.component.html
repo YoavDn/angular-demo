@@ -1,0 +1,14 @@
+<div (click)="selectCharacter(character)">
+  <button
+    class="flex md:flex-col h-80 shadow border-gray-200 rounded-md border w-full p-6 hover:shadow-lg transition-all duration-300 md:items-center"
+  >
+    <img
+      src="{{ character.image }}"
+      class="h-full md:w-52 md:h-52 rounded-md"
+      alt="character"
+    />
+    <div class="p-4">
+      <h2 class="text-xl font-bold">{{ character.name }}</h2>
+    </div>
+  </button>
+</div>

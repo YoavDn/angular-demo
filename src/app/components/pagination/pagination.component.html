@@ -1,0 +1,63 @@
+<div class="pt-5 flex justify-center items-center">
+  <button
+    class="px-5 disabled:opacity-75"
+    (click)="handleNewPage(filter.page + 1)"
+    [disabled]="!info.next"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      stroke="currentColor"
+      class="w-5 h-5 text-gray-500"
+      [ngClass]="{
+        'hover:text-gray-500': !info.next,
+        'hover:text-black': info.next
+      }"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M15.75 19.5L8.25 12l7.5-7.5"
+      />
+    </svg>
+  </button>
+  <div class="pages flex gap-5 text-sm">
+    <button
+      *ngFor="let page of pagination"
+      (click)="handleNewPage(page)"
+      class="text-gray-400 font-thin hover:text-black"
+      [ngClass]="{
+        'text-black': page === filter.page
+      }"
+    >
+      {{ page }}
+    </button>
+  </div>
+
+  <button
+    class="px-5 disabled:opacity-75"
+    (click)="handleNewPage(filter.page - 1)"
+    [disabled]="!info.prev"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      stroke="currentColor"
+      class="w-5 h-5 text-gray-500"
+      [ngClass]="{
+        'hover:text-gray-500': !info.prev,
+        'hover:text-black': info.prev
+      }"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M8.25 4.5l7.5 7.5-7.5 7.5"
+      />
+    </svg>
+  </button>
+</div>

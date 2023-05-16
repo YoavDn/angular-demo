@@ -1,0 +1,58 @@
+<div>
+  <div class="h-60 flex justify-center items-center relative my-8">
+    <img
+      class="object-cover h-full rounded-md w-full object-bottom absolute -z-10 overflow-hidden"
+      src="https://cutewallpaper.org/22/rick-and-morty-ps4-wallpapers/2403713854.jpg"
+      alt=""
+    />
+    <h1 class="text-center text-2xl pb-4">
+      <span class="text-rose-500 font-bold text-4xl">ANGULAR</span>
+      <br />
+      Rick and Morty
+    </h1>
+  </div>
+  <app-filter
+    *ngIf="characters && info"
+    [filter]="filter"
+    [info]="info"
+    (customEvent)="fetchData()"
+    (setNewPage)="onSetNewPage($event)"
+  />
+
+  <app-grid-container
+    (customEvent)="selectCharacter($event)"
+    *ngIf="characters && info"
+    [characters]="characters"
+    [info]="info"
+  ></app-grid-container>
+  <app-character-view
+    *ngIf="characterSelected"
+    [character]="characterSelected"
+    (customEvent)="closeModal()"
+  />
+  <div *ngIf="!characters || (!characters.length && info)">
+    <div class="flex flex-col justify-center items-center py-12">
+      <img
+        src="https://rickandmortyapi.com/api/character/avatar/34.jpeg"
+        class="w-32 h-32 rounded-full my-4"
+        alt="404 not found"
+      />
+      <h2 class="text-black text-center text-xl">No characters found...</h2>
+      <p class="text-gray-500 font-light">
+        Check your spelling or try different keywords and try again
+      </p>
+      <button
+        (click)="clearSearch()"
+        class="bg-gray-100 border-gray-300 border p-2 my-6 rounded-lg"
+      >
+        Clear Search
+      </button>
+    </div>
+  </div>
+  <app-pagination
+    *ngIf="info"
+    [info]="info"
+    [filter]="filter"
+    (setNewPage)="onSetNewPage($event)"
+  />
+</div>
