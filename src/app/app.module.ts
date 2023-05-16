@@ -16,6 +16,7 @@ import { CharacterViewComponent } from './components/character-view/character-vi
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { AboutPageComponent } from './pages/about-page/about-page.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
+import { SkeletonsComponent } from './components/skeletons/skeletons.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -34,6 +35,7 @@ const routes: Routes = [
     PaginationComponent,
     AboutPageComponent,
     HomePageComponent,
+    SkeletonsComponent,
   ],
   imports: [
     BrowserModule,

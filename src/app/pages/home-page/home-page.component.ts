@@ -1,7 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ICharacter, IInfo, IFilter } from 'src/app/types';
 import { DataService } from 'src/app/services/data.service';
-import { Subscription } from 'rxjs';
+
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-home-page',
@@ -10,10 +12,16 @@ import { Subscription } from 'rxjs';
 })
 export class HomePageComponent implements OnInit {
   characters: ICharacter[] = [];
-  info: IInfo | null = null;
+  info: IInfo = {
+    count: 0,
+    next: '',
+    pages: 0,
+    prev: '',
+  };
   characterSelected: null | ICharacter = null;
   errors: any;
   title = 'angular-app';
+  isLoading = true;
   private _filter: IFilter = {
     query: '',
     page: 1,
@@ -40,9 +48,17 @@ export class HomePageComponent implements OnInit {
   fetchData() {
     this.dataService
       .fetchData(this.filter.page, this.filter.query)
+      .pipe(
+        catchError((error) => {
+          console.error('Error fetching data:', error);
+          this.isLoading = false;
+          return throwError(() => new Error('failed to fetch data'));
+        })
+      )
       .subscribe((response) => {
         this.characters = response.characters.results;
         this.info = response.characters.info;
+        this.isLoading = false;
       });
   }
 
