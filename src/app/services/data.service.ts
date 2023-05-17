@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { gql } from 'apollo-angular';
 import { GET_CHARACTERS } from '../graphql/graphql.operations';
 
@@ -42,6 +42,12 @@ export class DataService {
         query,
         variables: { page, name },
       })
-      .valueChanges.pipe(map((response) => response.data));
+      .valueChanges.pipe(
+        map((response) => response.data),
+        catchError((error) => {
+          console.error(error);
+          return throwError(() => new Error('Failed to fetch data'));
+        })
+      );
   }
 }

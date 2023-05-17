@@ -14,7 +14,8 @@
   <app-filter
     [filter]="filter"
     [info]="info"
-    (customEvent)="fetchData()"
+    [characters]="characters"
+    (searchValueChanged)="onInputChange($event)"
     (setNewPage)="onSetNewPage($event)"
   />
   <p class="text-sm text-gray-400 py-2">

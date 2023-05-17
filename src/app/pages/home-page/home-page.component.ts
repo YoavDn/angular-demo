@@ -1,9 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ICharacter, IInfo, IFilter } from 'src/app/types';
 import { DataService } from 'src/app/services/data.service';
-
-import { catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home-page',
@@ -29,6 +28,7 @@ export class HomePageComponent implements OnInit {
   };
 
   constructor(private dataService: DataService) {}
+
   ngOnInit(): void {
     this.fetchData();
   }
@@ -47,21 +47,26 @@ export class HomePageComponent implements OnInit {
   }
 
   fetchData() {
-    this.dataService
-      .fetchData(this.filter.page, this.filter.query)
-      .pipe(
-        catchError((error) => {
-          console.error('Error fetching data:', error);
-          this.isLoading = false;
-          this.error = true;
-          return throwError(() => new Error('Failed to fetch data'));
-        })
-      )
-      .subscribe((response) => {
+    this.dataService.fetchData(this.filter.page, this.filter.query).subscribe({
+      next: (response) => {
         this.characters = response.characters.results;
         this.info = response.characters.info;
         this.isLoading = false;
-      });
+      },
+      error: (error) => {
+        console.error('Error fetching data:', error);
+        this.isLoading = false;
+        this.error = true;
+      },
+    });
+  }
+
+  onInputChange(query: string) {
+    this.filter = {
+      ...this.filter,
+      query,
+    };
+    // this.fetchData();
   }
 
   clearSearch() {
