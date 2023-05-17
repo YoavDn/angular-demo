@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { gql } from 'apollo-angular';
 import { GET_CHARACTERS } from '../graphql/graphql.operations';
-import { IFilter } from '../types';
 
 @Injectable({
   providedIn: 'root',

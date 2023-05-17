@@ -20,41 +20,58 @@
   <p class="text-sm text-gray-400 py-2">
     Total characters: {{ info.count || "" }}
   </p>
-  <app-skeletons *ngIf="isLoading" />
-  <app-grid-container
-    (customEvent)="selectCharacter($event)"
-    *ngIf="characters && info"
-    [characters]="characters"
-    [info]="info"
-  ></app-grid-container>
-  <app-character-view
-    *ngIf="characterSelected"
-    [character]="characterSelected"
-    (customEvent)="closeModal()"
-  />
-  <div *ngIf="!characters || (!characters.length && info && !isLoading)">
+  <main *ngIf="!error">
+    <app-skeletons *ngIf="isLoading" />
+    <app-grid-container
+      (customEvent)="selectCharacter($event)"
+      *ngIf="characters && info"
+      [characters]="characters"
+      [info]="info"
+    ></app-grid-container>
+    <app-character-view
+      *ngIf="characterSelected"
+      [character]="characterSelected"
+      (customEvent)="closeModal()"
+    />
+    <div *ngIf="!characters || (!characters.length && info && !isLoading)">
+      <div class="flex flex-col justify-center items-center py-12">
+        <img
+          src="https://rickandmortyapi.com/api/character/avatar/34.jpeg"
+          class="w-32 h-32 rounded-full my-4"
+          alt="404 not found"
+        />
+        <h2 class="text-black text-center text-xl">No characters found...</h2>
+        <p class="text-gray-500 font-light">
+          Check your spelling or try different keywords and try again
+        </p>
+        <button
+          (click)="clearSearch()"
+          class="bg-gray-100 border-gray-300 border p-2 my-6 rounded-lg"
+        >
+          Clear Search
+        </button>
+      </div>
+    </div>
+    <app-pagination
+      *ngIf="info"
+      [info]="info"
+      [filter]="filter"
+      (setNewPage)="onSetNewPage($event)"
+    />
+  </main>
+  <div *ngIf="error">
     <div class="flex flex-col justify-center items-center py-12">
       <img
-        src="https://rickandmortyapi.com/api/character/avatar/34.jpeg"
+        src="https://rickandmortyapi.com/api/character/avatar/62.jpeg"
         class="w-32 h-32 rounded-full my-4"
         alt="404 not found"
       />
-      <h2 class="text-black text-center text-xl">No characters found...</h2>
+      <h2 class="text-black text-center text-xl">
+        Oops.. something went wrong
+      </h2>
       <p class="text-gray-500 font-light">
-        Check your spelling or try different keywords and try again
+        Try refreshing the page or come back later
       </p>
-      <button
-        (click)="clearSearch()"
-        class="bg-gray-100 border-gray-300 border p-2 my-6 rounded-lg"
-      >
-        Clear Search
-      </button>
     </div>
   </div>
-  <app-pagination
-    *ngIf="info"
-    [info]="info"
-    [filter]="filter"
-    (setNewPage)="onSetNewPage($event)"
-  />
 </div>

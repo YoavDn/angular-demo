@@ -21,6 +21,7 @@ export class HomePageComponent implements OnInit {
   characterSelected: null | ICharacter = null;
   errors: any;
   title = 'angular-app';
+  error = false;
   isLoading = true;
   private _filter: IFilter = {
     query: '',
@@ -52,7 +53,8 @@ export class HomePageComponent implements OnInit {
         catchError((error) => {
           console.error('Error fetching data:', error);
           this.isLoading = false;
-          return throwError(() => new Error('failed to fetch data'));
+          this.error = true;
+          return throwError(() => new Error('Failed to fetch data'));
         })
       )
       .subscribe((response) => {
