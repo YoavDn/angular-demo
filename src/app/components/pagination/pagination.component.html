@@ -10,11 +10,8 @@
       viewBox="0 0 24 24"
       stroke-width="1.5"
       stroke="currentColor"
-      class="w-5 h-5 text-gray-500"
-      [ngClass]="{
-        'hover:text-gray-500': !info.next,
-        'hover:text-black': info.next
-      }"
+      class="w-5 h-5"
+      [ngClass]="info.next ? 'text-gray-800' : 'text-gray-400'"
     >
       <path
         stroke-linecap="round"
@@ -27,10 +24,8 @@
     <button
       *ngFor="let page of pagination"
       (click)="handleNewPage(page)"
-      class="text-gray-400 font-thin hover:text-black"
-      [ngClass]="{
-        'text-black': page === filter.page
-      }"
+      class="font-thin hover:text-black"
+      [ngClass]="filter.page === page ? 'text-gray-800' : 'text-gray-400'"
     >
       {{ page }}
     </button>
@@ -47,11 +42,8 @@
       viewBox="0 0 24 24"
       stroke-width="1.5"
       stroke="currentColor"
-      class="w-5 h-5 text-gray-500"
-      [ngClass]="{
-        'hover:text-gray-500': !info.prev,
-        'hover:text-black': info.prev
-      }"
+      class="w-5 h-5"
+      [ngClass]="info.prev ? 'text-gray-800' : 'text-gray-400'"
     >
       <path
         stroke-linecap="round"

@@ -7,7 +7,7 @@ import { IFilter, IInfo } from 'src/app/types';
   styleUrls: ['./pagination.component.css'],
 })
 export class PaginationComponent {
-  @Output() setNewPage = new EventEmitter();
+  @Output() setNewPage = new EventEmitter<number>();
   @Input() info!: IInfo;
   @Input() filter!: IFilter;
 
